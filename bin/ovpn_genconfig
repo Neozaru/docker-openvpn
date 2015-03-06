@@ -178,6 +178,17 @@ user nobody
 group nogroup
 EOF
 
+if [ -z "$DISABLE_HOOKS" ]; then
+cat >> "$conf" <<EOF
+# These scripts are called automatically on event
+script-security 2
+up "/hooks.sh up"
+down "/hooks.sh down"
+client-connect "/hooks.sh client-connect"
+client-disconnect "/hooks.sh client-disconnect"
+EOF
+fi
+
 [ -n "$OVPN_CLIENT_TO_CLIENT" ] && echo "client-to-client" >> "$conf"
 [ "$OVPN_DNS" == "1" ] && echo push "dhcp-option DNS 8.8.4.4" >> "$conf"
 [ "$OVPN_DNS" == "1" ] && echo push "dhcp-option DNS 8.8.8.8" >> "$conf"

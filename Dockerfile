@@ -28,4 +28,7 @@ WORKDIR /etc/openvpn
 CMD ["ovpn_run"]
 
 ADD ./bin /usr/local/bin
+ADD ./hooks.sh /hooks.sh
+RUN chmod a+x /hooks.sh
+RUN mkdir /hooks && chmod +rwx /hooks
 RUN chmod a+x /usr/local/bin/*
